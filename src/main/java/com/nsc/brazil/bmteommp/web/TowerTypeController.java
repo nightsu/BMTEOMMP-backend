@@ -27,12 +27,6 @@ public class TowerTypeController {
         return lst;
     }
 
-    @GetMapping("/towertype/{towertype}/{foundation}")
-    public List<Foundationlist> getFoundationByTowerType(@PathVariable String towertype,@PathVariable String foundation){
-        List<Foundationlist> lst = foundationlistRepository.findByTowerTypeAndFoundation(towertype,foundation);
-        return lst;
-    }
-
     @GetMapping("/towertype")
     public Map<String,JSONObject> getTowerTypeAndFoundation(@RequestParam String towertype,@RequestParam String foundationa,@RequestParam String foundationb,@RequestParam String foundationc,@RequestParam String foundationd){
         List<Towertypelist> towertypelists = towertypelistRepository.findByTowerType(towertype);

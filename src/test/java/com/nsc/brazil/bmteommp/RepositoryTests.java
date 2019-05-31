@@ -2,6 +2,7 @@ package com.nsc.brazil.bmteommp;
 
 import com.nsc.brazil.bmteommp.domain.*;
 import com.nsc.brazil.bmteommp.repository.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore
 public class RepositoryTests {
     @Autowired
     private ProjectsRepository projectsRepository;
@@ -52,6 +54,9 @@ public class RepositoryTests {
     @Autowired
     private PicturesinfoesRepository picturesinfoesRepository;
 
+
+    @Autowired
+    private ReportRepository reportRepository;
 
     @Test
     public void contextLoads() {
@@ -187,19 +192,25 @@ public class RepositoryTests {
         List<Picturesinfoes> result = new ArrayList<Picturesinfoes>();
 
         List<Regions> regionsList = regionsRepository.findAll();
-        for (Regions region: regionsList){
-            if(region.getSubstationID() == substationid){
-                List<Picturesinfoes> lst = picturesinfoesRepository.findByItemID(region.getID());
+
+        regionsList.forEach(item -> {
+            if(item.getSubstationID().equals(substationid)){
+                List<Picturesinfoes> lst = picturesinfoesRepository.findByItemID(item.getID());
                 result.addAll(lst);
             }
-        }
-//        regionsList.forEach(item -> {
-//
-//        });
+        });
 
         result.forEach(item -> {
             System.out.println(item.toString());
         });
     }
 
+
+    @Test
+    public void getReport() {
+        List<Report> lst = reportRepository.findAll();
+        lst.forEach(item -> {
+            System.out.println(item.toString());
+        });
+    }
 }
